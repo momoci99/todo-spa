@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     element: <TodoListPage />,
   },
   {
-    path: "/addTodo/:id",
+    path: "/addTodo",
     element: <AddTodoPage />,
   },
   {

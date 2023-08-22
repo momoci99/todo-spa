@@ -30,8 +30,23 @@ const todoSlice = createSlice({
         (todo) => todo.id !== action.payload
       );
     },
+
+    toggleCompleteStatus: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        flag: boolean;
+      }>
+    ) => {
+      const index = state.todoList.findIndex((todo) => {
+        return todo.id === action.payload.id;
+      });
+
+      state.todoList[index].isCompleted = action.payload.flag;
+    },
   },
 });
 
-export const { addTodo, updateTodo, removeTodo } = todoSlice.actions;
+export const { addTodo, updateTodo, removeTodo, toggleCompleteStatus } =
+  todoSlice.actions;
 export default todoSlice.reducer;

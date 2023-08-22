@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router";
 
+import TodoInput from "@src/components/TodoInput";
+
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
@@ -42,37 +44,26 @@ const AddTodoPage = () => {
     navigate("/");
   };
 
+  const titleOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event) return;
+    setTitle(event.target.value);
+  };
+
+  const descriptionOnChangeHandler = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(event.target.value);
+  };
+
   return (
     <Wrapper>
-      <form
-        action=""
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <button type="button" onClick={onSaveButtonHandler}>
-          저장하기
-        </button>
-
-        <label htmlFor="title">제목</label>
-        <input
-          value={title}
-          id="title"
-          name="title"
-          onChange={(event) => {
-            setTitle(event.target.value);
-          }}
-        ></input>
-
-        <label htmlFor="description">설명</label>
-        <textarea
-          value={description}
-          id="description"
-          onChange={(event) => {
-            setDescription(event.target.value);
-          }}
-        ></textarea>
-      </form>
+      <TodoInput
+        title={title}
+        titleOnChangeHandler={titleOnChangeHandler}
+        description={description}
+        descriptionOnChangeHandler={descriptionOnChangeHandler}
+        onSaveButtonHandler={onSaveButtonHandler}
+      ></TodoInput>
     </Wrapper>
   );
 };

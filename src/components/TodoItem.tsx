@@ -18,7 +18,7 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
       <button
         type="button"
         onClick={() => {
-          navigate(`/updateTodo:${todo.id}`);
+          navigate(`/updateTodo/${todo.id}`);
         }}
       >
         수정하기

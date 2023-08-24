@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { addTodo } from "@src/store/slices/todoSlice";
 
-import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router";
 
@@ -24,24 +22,31 @@ const Wrapper = styled.main`
 `;
 
 const AddTodoPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const onSaveButtonHandler = () => {
-    dispatch(
-      addTodo({
+    fetch("http://localhost:3000/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         id: uuidv4(),
         title: title,
         description: description,
         creationDate: new Date().toISOString(),
         isCompleted: false,
+      }),
+    })
+      .then(() => {
+        navigate("/");
       })
-    );
-
-    navigate("/");
+      .catch((reason) => {
+        console.error(reason);
+      });
   };
 
   const titleOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

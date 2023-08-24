@@ -26,9 +26,28 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
       <button
         type="button"
         onClick={() => {
-          dispatch(
-            toggleCompleteStatus({ id: todo.id, flag: !todo.isCompleted })
-          );
+          if (!todo) return;
+          fetch(`http://localhost:3000/todos/${todo.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: todo.id,
+              title: todo.title,
+              description: todo.description,
+              creationDate: todo.creationDate,
+              isCompleted: !todo.isCompleted,
+            }),
+          })
+            .then(() => {
+              dispatch(
+                toggleCompleteStatus({ id: todo.id, flag: !todo.isCompleted })
+              );
+            })
+            .catch((reason) => {
+              console.error(reason);
+            });
         }}
       >
         {todo.isCompleted ? "완료됨" : "진행예정"}
@@ -36,7 +55,16 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
       <button
         type="button"
         onClick={() => {
-          dispatch(removeTodo(todo.id));
+          if (!todo) return;
+          fetch(`http://localhost:3000/todos/${todo.id}`, {
+            method: "DELETE",
+          })
+            .then(() => {
+              dispatch(removeTodo(todo.id));
+            })
+            .catch((reason) => {
+              console.error(reason);
+            });
         }}
       >
         삭제

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { updateTodo } from "@src/store/slices/todoSlice";
 
 import { useParams } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { RootState } from "@src/store";
@@ -29,7 +28,6 @@ const Wrapper = styled.main`
 const UpdateTodoPage = () => {
   const { id } = useParams();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const todoList = useSelector((state: RootState) => {
     return state.todo.todoList;
@@ -41,18 +39,25 @@ const UpdateTodoPage = () => {
 
   const onSaveButtonHandler = () => {
     if (!todo) return;
-
-    dispatch(
-      updateTodo({
+    fetch(`http://localhost:3000/todos/${todo.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         id: todo.id,
         title: title,
         description: description,
         creationDate: todo.creationDate,
         isCompleted: todo.isCompleted,
+      }),
+    })
+      .then(() => {
+        navigate("/");
       })
-    );
-
-    navigate("/");
+      .catch((reason) => {
+        console.error(reason);
+      });
   };
 
   useEffect(() => {

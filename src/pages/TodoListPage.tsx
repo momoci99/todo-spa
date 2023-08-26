@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { initTodo } from "@src/store/slices/todoSlice";
-import TodoItemType from "@src/interfaces/TodoItem";
+import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
 
 const TodoListPage = () => {
   const dispatch = useDispatch();

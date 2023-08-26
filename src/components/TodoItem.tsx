@@ -1,4 +1,4 @@
-import TodoItemType from "@src/interfaces/TodoItem";
+import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

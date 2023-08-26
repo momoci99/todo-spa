@@ -8,7 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { initTodo } from "@src/store/slices/todoSlice";
-import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
+import {
+  activateTodoCategory,
+  deactivateTodoCategory,
+  initTodoCategories,
+} from "@src/store/slices/todoCategorySlice";
+import { TodoItem as TodoItemType, TodoCategory } from "@src/interfaces/Todo";
 
 const TodoListPage = () => {
   const dispatch = useDispatch();
@@ -19,19 +24,52 @@ const TodoListPage = () => {
     return state.todo.todoList;
   });
 
+  const todoCategories = useSelector((state: RootState) => {
+    return state.todoCategories.todoCategories;
+  });
+
   useEffect(() => {
     const fetchTodo = async () => {
       const res = await fetch("http://localhost:3000/todos");
-      const json: TodoItemType[] = await res.json();
+      const result: TodoItemType[] = await res.json();
 
-      dispatch(initTodo(json));
+      dispatch(initTodo(result));
+    };
+
+    const fetchTodoCategories = async () => {
+      const res = await fetch("http://localhost:3000/categories");
+      const result: TodoCategory[] = await res.json();
+
+      dispatch(initTodoCategories(result));
     };
 
     fetchTodo();
+    fetchTodoCategories();
   }, []);
 
   return (
     <div>
+      <section>
+        {todoCategories.map((category) => {
+          return (
+            <button
+              key={category.id}
+              className={category.isActivated ? "isActivated" : ""}
+              onClick={() => {
+                console.log("asdf");
+                if (category.isActivated) {
+                  dispatch(deactivateTodoCategory(category));
+                } else {
+                  dispatch(activateTodoCategory(category));
+                }
+              }}
+            >
+              {category.name}
+            </button>
+          );
+        })}
+      </section>
+
       <button
         type="button"
         onClick={() => {

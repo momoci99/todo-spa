@@ -1,11 +1,17 @@
 {
-  "todos": [
+  "categories": [
     {
-      "id": "767cfce5-1429-4947-bd84-cd8c35fee9fb",
-      "title": "xzcv",
-      "description": "zcxvzxcvxcvz",
-      "creationDate": "2023-08-24T11:48:28.930Z",
-      "isCompleted": false
+      "id": "work",
+      "name": "Work"
+    },
+    {
+      "id": "home",
+      "name": "Home"
+    },
+    {
+      "id": "other",
+      "name": "Other"
     }
-  ]
+  ],
+  "todos": []
 }

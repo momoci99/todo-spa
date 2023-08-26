@@ -12,4 +12,8 @@ interface TodoCategory {
   name: string;
 }
 
-export type { TodoItem, TodoCategory };
+interface DetailedTodoCategory extends TodoCategory {
+  isActivated?: boolean;
+}
+
+export type { TodoItem, TodoCategory, DetailedTodoCategory };

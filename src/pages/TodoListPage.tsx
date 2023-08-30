@@ -1,5 +1,5 @@
 import TodoItem from "@src/components/TodoItem";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { RootState } from "@src/store";
 
@@ -8,15 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { initTodo } from "@src/store/slices/todoSlice";
+
+import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import {
   activateTodoCategory,
   deactivateTodoCategory,
-  initTodoCategories,
+  fetchTodoCategories,
 } from "@src/store/slices/todoCategorySlice";
-import { TodoItem as TodoItemType, TodoCategory } from "@src/interfaces/Todo";
+import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
 
 const TodoListPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -36,15 +38,8 @@ const TodoListPage = () => {
       dispatch(initTodo(result));
     };
 
-    const fetchTodoCategories = async () => {
-      const res = await fetch("http://localhost:3000/categories");
-      const result: TodoCategory[] = await res.json();
-
-      dispatch(initTodoCategories(result));
-    };
-
     fetchTodo();
-    fetchTodoCategories();
+    dispatch(fetchTodoCategories());
   }, []);
 
   return (
@@ -56,9 +51,8 @@ const TodoListPage = () => {
               key={category.id}
               className={category.isActivated ? "isActivated" : ""}
               onClick={() => {
-                console.log("asdf");
                 if (category.isActivated) {
-                  dispatch(deactivateTodoCategory(category));
+                  dispatch(deactivateTodoCategory());
                 } else {
                   dispatch(activateTodoCategory(category));
                 }

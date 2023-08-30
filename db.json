@@ -1,17 +1,27 @@
 {
   "categories": [
     {
-      "id": "work",
-      "name": "Work"
-    },
-    {
-      "id": "home",
-      "name": "Home"
-    },
-    {
-      "id": "other",
-      "name": "Other"
+      "id": "b24fddd1-d339-4fd5-9e6c-e59ef2ed1530",
+      "name": "먹는거"
     }
   ],
-  "todos": []
+  "todos": [
+    {
+      "id": "bc1fa0e8-2f4d-4995-acf3-6a90fad8bd98",
+      "title": "ㅇㅇ",
+      "description": "ㅇㅇ",
+      "creationDate": "2023-08-30T10:41:14.077Z",
+      "isCompleted": false,
+      "categoryIds": [
+        "6691aa5d-f4ee-426d-875b-89d9c9cf2988",
+        "b7fa03af-5440-4c84-b558-68655ba512ec",
+        "2ce12a8e-9d68-4234-988a-6da5bde0a236",
+        "af728a04-f502-41fd-97fe-783c882d11ff",
+        "a1a6eda2-d473-4b01-b7b4-e9e647a35101",
+        "8ab23938-a518-4eca-8116-abc95165edb9",
+        "fe84922e-3324-4ac2-b227-5e923d38d079",
+        "42106619-5112-4505-83bd-00bda585c307"
+      ]
+    }
+  ]
 }

@@ -1,12 +1,15 @@
 import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
-
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { removeTodo, toggleCompleteStatus } from "@src/store/slices/todoSlice";
-
+import { RootState } from "@src/store";
 const TodoItem = ({ todo }: { todo: TodoItemType }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const todoCategories = useSelector((state: RootState) => {
+    return state.todoCategories.todoCategories;
+  });
 
   return (
     <li>
@@ -14,7 +17,16 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
       <span>{todo.description}</span>
       <span>{todo.creationDate}</span>
       <span>{todo.isCompleted}</span>
-
+      카테고리
+      <ul>
+        {todo.categoryIds.map((id) => {
+          return (
+            <li key={id}>
+              {todoCategories.find((category) => category.id === id)?.name}
+            </li>
+          );
+        })}
+      </ul>
       <button
         type="button"
         onClick={() => {

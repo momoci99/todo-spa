@@ -1,6 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { TodoCategory, DetailedTodoCategory } from "@src/interfaces/Todo";
+
+const fetchTodoCategories = createAsyncThunk<TodoCategory[]>(
+  "todoCategories/fetchTodoCategories",
+  async () => {
+    const res = await fetch("http://localhost:3000/categories");
+    const result: TodoCategory[] = await res.json();
+    return result;
+  }
+);
 
 interface TodoCategoryState {
   todoCategories: DetailedTodoCategory[];
@@ -22,25 +31,25 @@ const todoCategories = createSlice({
       state,
       action: PayloadAction<DetailedTodoCategory>
     ) => {
-      const index = state.todoCategories.findIndex((todoCategory) => {
-        return todoCategory.id === action.payload.id;
+      state.todoCategories.forEach((category) => {
+        category.isActivated = category.id === action.payload.id;
       });
-
-      state.todoCategories[index].isActivated = true;
     },
 
-    deactivateTodoCategory: (
-      state,
-      action: PayloadAction<DetailedTodoCategory>
-    ) => {
-      const index = state.todoCategories.findIndex((todoCategory) => {
-        return todoCategory.id === action.payload.id;
+    deactivateTodoCategory: (state) => {
+      state.todoCategories.forEach((category) => {
+        category.isActivated = false;
       });
-
-      state.todoCategories[index].isActivated = false;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchTodoCategories.fulfilled, (state, action) => {
+      state.todoCategories = action.payload;
+    });
+  },
 });
+
+export { fetchTodoCategories };
 
 export const {
   initTodoCategories,

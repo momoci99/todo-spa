@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { RootState } from "@src/store";
-
+import { fetchTodoCategories } from "@src/store/slices/todoCategorySlice";
 import TodoInput from "@src/components/TodoInput";
 
+import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
@@ -26,6 +27,8 @@ const Wrapper = styled.main`
 `;
 
 const UpdateTodoPage = () => {
+  const dispatch = useAppDispatch();
+
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -37,8 +40,12 @@ const UpdateTodoPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const [originCategoryIds, setOriginCategoryIds] = useState<Array<string>>([]);
+  const [userInputCategory, setUserInputCategory] = useState("");
+
   const onSaveButtonHandler = () => {
     if (!todo) return;
+
     fetch(`http://localhost:3000/todos/${todo.id}`, {
       method: "PUT",
       headers: {
@@ -50,6 +57,7 @@ const UpdateTodoPage = () => {
         description: description,
         creationDate: todo.creationDate,
         isCompleted: todo.isCompleted,
+        categoryIds: originCategoryIds.map((id) => id),
       }),
     })
       .then(() => {
@@ -65,6 +73,7 @@ const UpdateTodoPage = () => {
 
     setTitle(todo.title);
     setDescription(todo.description);
+    setOriginCategoryIds(todo.categoryIds);
   }, [todo]);
 
   const titleOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +87,32 @@ const UpdateTodoPage = () => {
     setDescription(event.target.value);
   };
 
+  const userInputCategoryOnChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUserInputCategory(event.target.value);
+  };
+
+  const userInputCategoryEnterKeyHandler = () => {
+    const newCategory = {
+      id: uuidv4(),
+      name: userInputCategory,
+    };
+
+    fetch("http://localhost:3000/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCategory),
+    }).then(() => {
+      dispatch(fetchTodoCategories());
+    });
+
+    setOriginCategoryIds([...originCategoryIds, newCategory.id]);
+    setUserInputCategory("");
+  };
+
   return (
     <Wrapper>
       <TodoInput
@@ -86,6 +121,10 @@ const UpdateTodoPage = () => {
         description={description}
         descriptionOnChangeHandler={descriptionOnChangeHandler}
         onSaveButtonHandler={onSaveButtonHandler}
+        originCategoryIds={originCategoryIds}
+        userInputCategory={userInputCategory}
+        userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
+        userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
       ></TodoInput>
     </Wrapper>
   );

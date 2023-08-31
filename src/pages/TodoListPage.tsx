@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 
-import { initTodo } from "@src/store/slices/todoSlice";
+import { fetchTodosByCategoryId } from "@src/store/slices/todoSlice";
 
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import {
@@ -15,11 +15,9 @@ import {
   deactivateTodoCategory,
   fetchTodoCategories,
 } from "@src/store/slices/todoCategorySlice";
-import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
 
 const TodoListPage = () => {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
 
   const todoList = useSelector((state: RootState) => {
@@ -31,16 +29,20 @@ const TodoListPage = () => {
   });
 
   useEffect(() => {
-    const fetchTodo = async () => {
-      const res = await fetch("http://localhost:3000/todos");
-      const result: TodoItemType[] = await res.json();
-
-      dispatch(initTodo(result));
-    };
-
-    fetchTodo();
     dispatch(fetchTodoCategories());
   }, []);
+
+  useEffect(() => {
+    const activatedCategory = todoCategories.find(
+      (category) => category.isActivated
+    );
+
+    if (activatedCategory) {
+      dispatch(fetchTodosByCategoryId(activatedCategory.id));
+    } else {
+      dispatch(fetchTodosByCategoryId(""));
+    }
+  }, [todoCategories]);
 
   return (
     <div>
@@ -49,7 +51,9 @@ const TodoListPage = () => {
           return (
             <button
               key={category.id}
-              className={category.isActivated ? "isActivated" : ""}
+              style={{
+                backgroundColor: category.isActivated ? "blue" : "",
+              }}
               onClick={() => {
                 if (category.isActivated) {
                   dispatch(deactivateTodoCategory());

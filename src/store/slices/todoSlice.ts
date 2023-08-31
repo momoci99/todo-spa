@@ -1,6 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { TodoItem } from "@src/interfaces/Todo";
+
+const fetchTodosByCategoryId = createAsyncThunk(
+  "todoList/fetchTodosByCategoryId",
+  async (categoryId?: string) => {
+    let res = undefined;
+
+    if (categoryId) {
+      res = await fetch(
+        "http://localhost:3000/todos?categoryIds_like=" + categoryId
+      );
+    } else {
+      res = await fetch("http://localhost:3000/todos");
+    }
+
+    const result: TodoItem[] = await res.json();
+    return result;
+  }
+);
 
 interface TodoListState {
   todoList: TodoItem[];
@@ -48,7 +66,14 @@ const todoSlice = createSlice({
       state.todoList[index].isCompleted = action.payload.flag;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchTodosByCategoryId.fulfilled, (state, action) => {
+      state.todoList = action.payload;
+    });
+  },
 });
+
+export { fetchTodosByCategoryId };
 
 export const {
   initTodo,

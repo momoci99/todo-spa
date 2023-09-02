@@ -14,6 +14,7 @@ import {
   activateTodoCategory,
   deactivateTodoCategory,
   fetchTodoCategories,
+  removeCategoryById,
 } from "@src/store/slices/todoCategorySlice";
 
 import CategoryButton from "@src/components/CategoryButton";
@@ -68,7 +69,8 @@ const TodoListPage = () => {
                 }
               }}
               onDeleteButtonClickHandler={() => {
-                console.log("delete");
+                dispatch(removeCategoryById(category.id));
+                dispatch(fetchTodoCategories());
               }}
             ></CategoryButton>
           );

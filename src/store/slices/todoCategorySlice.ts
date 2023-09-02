@@ -11,6 +11,15 @@ const fetchTodoCategories = createAsyncThunk<TodoCategory[]>(
   }
 );
 
+const removeCategoryById = createAsyncThunk<void, string>(
+  "todoCategories/removeCategory",
+  async (categoryId: string) => {
+    await fetch("http://localhost:3000/categories/" + categoryId, {
+      method: "DELETE",
+    });
+  }
+);
+
 interface TodoCategoryState {
   todoCategories: DetailedTodoCategory[];
 }
@@ -49,7 +58,7 @@ const todoCategories = createSlice({
   },
 });
 
-export { fetchTodoCategories };
+export { fetchTodoCategories, removeCategoryById };
 
 export const {
   initTodoCategories,

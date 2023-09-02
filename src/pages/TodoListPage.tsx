@@ -16,6 +16,8 @@ import {
   fetchTodoCategories,
 } from "@src/store/slices/todoCategorySlice";
 
+import CategoryButton from "@src/components/CategoryButton";
+
 const TodoListPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -46,24 +48,29 @@ const TodoListPage = () => {
 
   return (
     <div>
-      <section>
+      <section
+        style={{
+          display: "flex",
+        }}
+      >
         {todoCategories.map((category) => {
           return (
-            <button
+            <CategoryButton
+              showDeleteButton
+              name={category.name}
               key={category.id}
-              style={{
-                backgroundColor: category.isActivated ? "blue" : "",
-              }}
-              onClick={() => {
+              isActivated={category.isActivated}
+              onClickHandler={() => {
                 if (category.isActivated) {
                   dispatch(deactivateTodoCategory());
                 } else {
                   dispatch(activateTodoCategory(category));
                 }
               }}
-            >
-              {category.name}
-            </button>
+              onDeleteButtonClickHandler={() => {
+                console.log("delete");
+              }}
+            ></CategoryButton>
           );
         })}
       </section>

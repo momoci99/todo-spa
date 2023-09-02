@@ -13,7 +13,7 @@ interface TodoItem {
 }
 
 interface DetailedTodoCategory extends TodoCategory {
-  isActivated?: boolean;
+  isActivated: boolean;
 }
 
 export type { TodoItem, TodoCategory, DetailedTodoCategory };

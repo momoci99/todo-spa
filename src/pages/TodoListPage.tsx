@@ -59,7 +59,7 @@ const TodoListPage = () => {
               showDeleteButton
               name={category.name}
               key={category.id}
-              isActivated={category.isActivated}
+              isActivated={category.isActivated ? true : false}
               onClickHandler={() => {
                 if (category.isActivated) {
                   dispatch(deactivateTodoCategory());

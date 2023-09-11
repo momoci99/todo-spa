@@ -9,6 +9,9 @@ import { Provider } from "react-redux";
 
 import GlobalFontStyle from "@src/fonts/fonts";
 
+import { ThemeProvider } from "styled-components";
+import theme from "@src/styles/theme";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,13 +29,15 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="app">
-      <Provider store={store}>
-        <GlobalStyle />
-        <GlobalFontStyle />
-        <RouterProvider router={router} />
-      </Provider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="app">
+        <Provider store={store}>
+          <GlobalStyle />
+          <GlobalFontStyle />
+          <RouterProvider router={router} />
+        </Provider>
+      </div>
+    </ThemeProvider>
   );
 }
 

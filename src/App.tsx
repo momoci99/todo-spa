@@ -12,6 +12,8 @@ import GlobalFontStyle from "@src/fonts/fonts";
 import { ThemeProvider } from "styled-components";
 import theme from "@src/styles/theme";
 
+import styled from "styled-components";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,16 +29,22 @@ const router = createBrowserRouter([
   },
 ]);
 
+const Wrapper = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="app">
+      <Wrapper className="app">
         <Provider store={store}>
           <GlobalStyle />
           <GlobalFontStyle />
           <RouterProvider router={router} />
         </Provider>
-      </div>
+      </Wrapper>
     </ThemeProvider>
   );
 }

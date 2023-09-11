@@ -7,6 +7,8 @@ import UpdateTodoPage from "@pages/UpdateTodoPage";
 import store from "@src/store/index";
 import { Provider } from "react-redux";
 
+import GlobalFontStyle from "@src/fonts/fonts";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +29,7 @@ function App() {
     <div className="app">
       <Provider store={store}>
         <GlobalStyle />
+        <GlobalFontStyle />
         <RouterProvider router={router} />
       </Provider>
     </div>

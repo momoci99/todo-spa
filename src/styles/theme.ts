@@ -4,6 +4,7 @@ const colors = {
   primary: {
     dark: "#096C68",
     default: "#1c967e",
+    light: "#24A19C",
     background: "#FEF9F9",
     focused: "#a9cec7",
     pressed: "#0f4d40",

@@ -11,6 +11,11 @@ const colors = {
     outline: "#f2f9f9",
   },
 
+  secondary: {
+    dark: "#1868BA",
+    default: "#218EFD",
+  },
+
   neutral: {
     primary: "#1D3066",
     secondary: "#737FA0",

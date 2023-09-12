@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { removeTodo, toggleCompleteStatus } from "@src/store/slices/todoSlice";
+
+import { useSelector } from "react-redux";
+
 import { RootState } from "@src/store";
 import Card from "@src/components/Card";
 
 import styled from "styled-components";
+
+import MoreButton from "@src/components/MoreButton";
+
+import TodoItemMoreMenu from "@src/components/TodoItemMoreMenu";
 
 const Wrapper = styled.li`
   list-style: none;
@@ -13,6 +18,13 @@ const Wrapper = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 16px 0px 16px;
+  }
 
   .title {
     color: ${(props) => {
@@ -32,8 +44,7 @@ const Wrapper = styled.li`
 `;
 
 const TodoItem = ({ todo }: { todo: TodoItemType }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [menuModalIsOpen, setMenuModalIsOpen] = useState(false);
 
   const todoCategories = useSelector((state: RootState) => {
     return state.todoCategories.todoCategories;
@@ -41,7 +52,19 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
 
   return (
     <Wrapper>
-      <Card header={<p className="title">{todo.title}</p>}>
+      <Card
+        header={
+          <div className="header-container">
+            <span className="title">{todo.title}</span>
+            <MoreButton
+              onClickHandler={() => {
+                //모달창 표시
+                setMenuModalIsOpen(true);
+              }}
+            ></MoreButton>
+          </div>
+        }
+      >
         <span>{todo.description}</span>
 
         <div>
@@ -49,72 +72,26 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
           <span>{todo.isCompleted}</span>
           카테고리
           <ul>
-            {todo.categoryIds.map((id) => {
-              return (
-                <li key={id}>
-                  {todoCategories.find((category) => category.id === id)?.name}
-                </li>
-              );
-            })}
+            {todo.categoryIds &&
+              todo.categoryIds.map((id) => {
+                return (
+                  <li key={id}>
+                    {
+                      todoCategories.find((category) => category.id === id)
+                        ?.name
+                    }
+                  </li>
+                );
+              })}
           </ul>
-          <button
-            type="button"
-            onClick={() => {
-              navigate(`/updateTodo/${todo.id}`);
-            }}
-          >
-            수정하기
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              if (!todo) return;
-              fetch(`http://localhost:3000/todos/${todo.id}`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  id: todo.id,
-                  title: todo.title,
-                  description: todo.description,
-                  creationDate: todo.creationDate,
-                  isCompleted: !todo.isCompleted,
-                }),
-              })
-                .then(() => {
-                  dispatch(
-                    toggleCompleteStatus({
-                      id: todo.id,
-                      flag: !todo.isCompleted,
-                    })
-                  );
-                })
-                .catch((reason) => {
-                  console.error(reason);
-                });
-            }}
-          >
-            {todo.isCompleted ? "완료됨" : "진행예정"}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              if (!todo) return;
-              fetch(`http://localhost:3000/todos/${todo.id}`, {
-                method: "DELETE",
-              })
-                .then(() => {
-                  dispatch(removeTodo(todo.id));
-                })
-                .catch((reason) => {
-                  console.error(reason);
-                });
-            }}
-          >
-            삭제
-          </button>
         </div>
+        <TodoItemMoreMenu
+          isOpen={menuModalIsOpen}
+          onClose={() => {
+            setMenuModalIsOpen(false);
+          }}
+          todo={todo}
+        ></TodoItemMoreMenu>
       </Card>
     </Wrapper>
   );

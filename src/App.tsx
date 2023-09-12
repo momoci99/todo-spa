@@ -13,6 +13,9 @@ import { ThemeProvider } from "styled-components";
 import theme from "@src/styles/theme";
 
 import styled from "styled-components";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const router = createBrowserRouter([
   {

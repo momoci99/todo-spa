@@ -19,6 +19,16 @@ import {
 
 import CategoryButton from "@src/components/CategoryButton";
 
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  .todo-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+`;
+
 const TodoListPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -48,7 +58,7 @@ const TodoListPage = () => {
   }, [todoCategories]);
 
   return (
-    <div>
+    <Wrapper>
       <section
         style={{
           display: "flex",
@@ -85,10 +95,13 @@ const TodoListPage = () => {
       >
         +
       </button>
-      {todoList.map((todo) => (
-        <TodoItem key={todo.id} todo={todo}></TodoItem>
-      ))}
-    </div>
+
+      <ul className="todo-list-container">
+        {todoList.map((todo) => (
+          <TodoItem key={todo.id} todo={todo}></TodoItem>
+        ))}
+      </ul>
+    </Wrapper>
   );
 };
 

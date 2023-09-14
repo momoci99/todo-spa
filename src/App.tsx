@@ -1,19 +1,17 @@
 import "@src/App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import GlobalStyle from "@assets/GlobalStyle";
-import TodoListPage from "@pages/TodoListPage";
 import AddTodoPage from "@pages/AddTodoPage";
+import TodoListPage from "@pages/TodoListPage";
 import UpdateTodoPage from "@pages/UpdateTodoPage";
-import store from "@src/store/index";
-import { Provider } from "react-redux";
-
 import GlobalFontStyle from "@src/fonts/fonts";
-
-import { ThemeProvider } from "styled-components";
+import store from "@src/store/index";
 import theme from "@src/styles/theme";
-
-import styled from "styled-components";
 import Modal from "react-modal";
+import { Provider } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import styled from "styled-components";
 
 Modal.setAppElement("#root");
 
@@ -33,7 +31,6 @@ const router = createBrowserRouter([
 ]);
 
 const Wrapper = styled.main`
-  display: flex;
   justify-content: center;
   align-items: center;
 `;

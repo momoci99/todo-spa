@@ -12,6 +12,8 @@ import MoreButton from "@src/components/MoreButton";
 
 import TodoItemMoreMenu from "@src/components/TodoListPage/TodoItemMoreMenu";
 
+import { useDataFormatter } from "@src/hooks/useDataFormatter";
+
 const Wrapper = styled.li`
   list-style: none;
 
@@ -24,27 +26,76 @@ const Wrapper = styled.li`
     justify-content: space-between;
     width: 100%;
     padding: 0px 16px 0px 16px;
+
+    .title {
+      color: ${(props) => {
+        return props.theme.colors.neutral.white;
+      }};
+
+      font-family: Noto Sans KR;
+      font-size: ${(props) => {
+        return props.theme.fontSizes.small;
+      }};
+
+      font-weight: ${(props) => {
+        return props.theme.fontWeights.light;
+      }};
+      line-height: normal;
+    }
   }
 
-  .title {
-    color: ${(props) => {
-      return props.theme.colors.neutral.white;
-    }};
+  .body-container {
+    padding: 16px;
+
+    min-height: 40px;
+    max-height: 60px;
+    width: 400px;
+
+    border-radius: 8px;
+
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
     font-family: Noto Sans KR;
     font-size: ${(props) => {
       return props.theme.fontSizes.small;
     }};
+  }
 
+  .splitter {
+    margin: 0 16px;
+    height: 1px;
+
+    background-color: ${(props) => {
+      return props.theme.colors.neutral.line;
+    }};
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 16px;
+
+    font-family: Noto Sans KR;
+    font-size: ${(props) => {
+      return props.theme.fontSizes.small;
+    }};
     font-weight: ${(props) => {
       return props.theme.fontWeights.light;
     }};
-    line-height: normal;
+    color: ${(props) => {
+      return props.theme.colors.neutral.secondary;
+    }};
   }
 `;
 
 const TodoItem = ({ todo }: { todo: TodoItemType }) => {
   const [menuModalIsOpen, setMenuModalIsOpen] = useState(false);
+
+  const { convertDate } = useDataFormatter();
 
   const todoCategories = useSelector((state: RootState) => {
     return state.todoCategories.todoCategories;
@@ -64,27 +115,33 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
             ></MoreButton>
           </div>
         }
-      >
-        <span>{todo.description}</span>
+        footer={
+          <>
+            <div className="splitter"></div>
+            <div className="footer-container">
+              {/* <span>{todo.isCompleted}</span> */}
 
-        <div>
-          <span>{todo.creationDate}</span>
-          <span>{todo.isCompleted}</span>
-          카테고리
-          <ul>
-            {todo.categoryIds &&
-              todo.categoryIds.map((id) => {
-                return (
-                  <li key={id}>
-                    {
-                      todoCategories.find((category) => category.id === id)
-                        ?.name
-                    }
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
+              <ul>
+                {todo.categoryIds &&
+                  todo.categoryIds.map((id) => {
+                    return (
+                      <li key={id}>
+                        {
+                          todoCategories.find((category) => category.id === id)
+                            ?.name
+                        }
+                      </li>
+                    );
+                  })}
+              </ul>
+
+              <span>{convertDate(todo.creationDate)}</span>
+            </div>
+          </>
+        }
+      >
+        <div className="body-container">{todo.description}</div>
+
         <TodoItemMoreMenu
           isOpen={menuModalIsOpen}
           onClose={() => {

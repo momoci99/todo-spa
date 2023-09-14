@@ -1,4 +1,4 @@
-import TodoItem from "@src/components/TodoItem";
+import TodoItem from "@src/components/TodoListPage/TodoItem";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@src/store";

@@ -4,13 +4,13 @@ import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@src/store";
-import Card from "@src/components/Card";
+import Card from "@src/components/Common/Card";
 
 import styled from "styled-components";
 
 import MoreButton from "@src/components/MoreButton";
 
-import TodoItemMoreMenu from "@src/components/TodoItemMoreMenu";
+import TodoItemMoreMenu from "@src/components/TodoListPage/TodoItemMoreMenu";
 
 const Wrapper = styled.li`
   list-style: none;

@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { TodoCategory, DetailedTodoCategory } from "@src/interfaces/Todo";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { DetailedTodoCategory, TodoCategory } from "@src/interfaces/Todo";
 
 const fetchTodoCategories = createAsyncThunk<TodoCategory[]>(
   "todoCategories/fetchTodoCategories",

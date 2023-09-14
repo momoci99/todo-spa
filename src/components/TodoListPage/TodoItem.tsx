@@ -84,7 +84,7 @@ const Wrapper = styled.li`
       return props.theme.fontSizes.small;
     }};
     font-weight: ${(props) => {
-      return props.theme.fontWeights.light;
+      return props.theme.fontWeights.medium;
     }};
     color: ${(props) => {
       return props.theme.colors.neutral.secondary;

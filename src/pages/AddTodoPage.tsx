@@ -1,4 +1,5 @@
 import TodoInput from "@src/components/TodoInput";
+import { CATEGORY_COLOR_PALETTE } from "@src/constatns/CategoryColorPalette";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { fetchTodoCategories } from "@src/store/slices/todoCategorySlice";
 import { useState } from "react";
@@ -72,9 +73,16 @@ const AddTodoPage = () => {
   };
 
   const userInputCategoryEnterKeyHandler = () => {
+    const randomColorIndex = Math.floor(
+      Math.random() * CATEGORY_COLOR_PALETTE.length
+    );
+
+    const { backgroundColor } = CATEGORY_COLOR_PALETTE[randomColorIndex];
+
     const newCategory = {
       id: uuidv4(),
       name: userInputCategory,
+      backgroundColor: backgroundColor,
     };
 
     fetch("http://localhost:3000/categories", {

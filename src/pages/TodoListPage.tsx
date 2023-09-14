@@ -1,4 +1,4 @@
-import CategoryButton from "@src/components/CategoryButton";
+import CategoryButton from "@src/components/Common/CategoryButton";
 import TodoItem from "@src/components/TodoListPage/TodoItem";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { RootState } from "@src/store";
@@ -19,6 +19,16 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+
+  .category-container {
+    display: flex;
+    padding: 20px 0px;
+    gap: 3px;
+    align-items: flex-start;
+
+    white-space: nowrap;
+    overflow-x: scroll;
   }
 `;
 
@@ -52,18 +62,15 @@ const TodoListPage = () => {
 
   return (
     <Wrapper>
-      <section
-        style={{
-          display: "flex",
-        }}
-      >
+      <section className="category-container">
         {todoCategories.map((category) => {
           return (
             <CategoryButton
               showDeleteButton
               name={category.name}
+              $backgroundColor={category.backgroundColor}
               key={category.id}
-              isActivated={category.isActivated ? true : false}
+              $isActivated={category.isActivated ? true : false}
               onClickHandler={() => {
                 if (category.isActivated) {
                   dispatch(deactivateTodoCategory());

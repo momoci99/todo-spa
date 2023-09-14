@@ -1,4 +1,5 @@
 import Card from "@src/components/Common/Card";
+import CategoryButton from "@src/components/Common/CategoryButton";
 import MoreButton from "@src/components/MoreButton";
 import TodoItemMoreMenu from "@src/components/TodoListPage/TodoItemMoreMenu";
 import { useDataFormatter } from "@src/hooks/useDataFormatter";
@@ -43,7 +44,6 @@ const Wrapper = styled.li`
 
     min-height: 40px;
     max-height: 60px;
-    width: 400px;
 
     border-radius: 8px;
 
@@ -70,6 +70,7 @@ const Wrapper = styled.li`
   .footer-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     padding: 16px;
 
@@ -78,11 +79,24 @@ const Wrapper = styled.li`
       return props.theme.fontSizes.small;
     }};
     font-weight: ${(props) => {
-      return props.theme.fontWeights.medium;
+      return props.theme.fontWeights.normal;
     }};
-    color: ${(props) => {
-      return props.theme.colors.neutral.secondary;
-    }};
+
+    .date {
+      color: ${(props) => {
+        return props.theme.colors.neutral.secondary;
+      }};
+    }
+
+    .footer-category-container {
+      display: flex;
+
+      justify-content: start;
+      max-width: 180px;
+
+      overflow: scroll;
+      gap: 5px;
+    }
   }
 `;
 
@@ -113,23 +127,23 @@ const TodoItem = ({ todo }: { todo: TodoItemType }) => {
           <>
             <div className="splitter"></div>
             <div className="footer-container">
-              {/* <span>{todo.isCompleted}</span> */}
-
-              <ul>
+              <ul className="footer-category-container">
                 {todo.categoryIds &&
                   todo.categoryIds.map((id) => {
+                    const category = todoCategories.find(
+                      (category) => category.id === id
+                    );
                     return (
-                      <li key={id}>
-                        {
-                          todoCategories.find((category) => category.id === id)
-                            ?.name
-                        }
-                      </li>
+                      <CategoryButton
+                        key={id}
+                        name={category?.name || ""}
+                        $backgroundColor={category?.backgroundColor || ""}
+                      ></CategoryButton>
                     );
                   })}
               </ul>
 
-              <span>{convertDate(todo.creationDate)}</span>
+              <span className="date">{convertDate(todo.creationDate)}</span>
             </div>
           </>
         }

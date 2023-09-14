@@ -2,18 +2,24 @@ import { ReactComponent as DeleteIcon } from "@assets/ico_delete.svg";
 import styled from "styled-components";
 
 const Wrapper = styled.span<{
-  color: string;
   $backgroundColor: string;
   $isActivated: boolean;
 }>`
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 
   gap: 6px;
   padding: 4px 8px;
   border-radius: 4px;
+  height: 14px;
 
-  color: "#000000";
+  color: #000000;
+
+  white-space: nowrap;
+
+  font-family: Noto Sans KR;
 
   font-size: ${(props) => {
     return props.theme.fontSizes.small;
@@ -46,7 +52,6 @@ const Wrapper = styled.span<{
 
 interface CategoryButtonPros {
   name: string;
-  color?: string;
   $backgroundColor: string;
   $isActivated?: boolean;
   showDeleteButton?: boolean;
@@ -57,7 +62,7 @@ interface CategoryButtonPros {
 const CategoryButton = (props: CategoryButtonPros) => {
   const {
     name,
-    color,
+
     $backgroundColor,
     $isActivated,
     showDeleteButton,
@@ -66,7 +71,6 @@ const CategoryButton = (props: CategoryButtonPros) => {
   } = props;
   return (
     <Wrapper
-      color={color ? color : "#000000"}
       $backgroundColor={$backgroundColor}
       $isActivated={$isActivated ? true : false}
     >

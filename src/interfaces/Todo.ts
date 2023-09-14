@@ -1,6 +1,7 @@
 interface TodoCategory {
   id: string;
   name: string;
+  backgroundColor: string;
 }
 
 interface TodoItem {
@@ -16,4 +17,4 @@ interface DetailedTodoCategory extends TodoCategory {
   isActivated?: boolean;
 }
 
-export type { TodoItem, TodoCategory, DetailedTodoCategory };
+export type { DetailedTodoCategory, TodoCategory, TodoItem };

@@ -1,24 +1,17 @@
+import CategoryButton from "@src/components/CategoryButton";
 import TodoItem from "@src/components/TodoListPage/TodoItem";
-import { useSelector } from "react-redux";
-
-import { RootState } from "@src/store";
-
-import { useNavigate } from "react-router-dom";
-
-import { useEffect } from "react";
-
-import { fetchTodosByCategoryId } from "@src/store/slices/todoSlice";
-
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
+import { RootState } from "@src/store";
 import {
   activateTodoCategory,
   deactivateTodoCategory,
   fetchTodoCategories,
   removeCategoryById,
 } from "@src/store/slices/todoCategorySlice";
-
-import CategoryButton from "@src/components/CategoryButton";
-
+import { fetchTodosByCategoryId } from "@src/store/slices/todoSlice";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`

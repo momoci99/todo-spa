@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { ReactComponent as DeleteIcon } from "@assets/ico_delete.svg";
+import styled from "styled-components";
 
 const Wrapper = styled.span`
   display: flex;

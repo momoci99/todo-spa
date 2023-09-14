@@ -1,17 +1,14 @@
-import Modal from "react-modal";
-import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
-
-// import styled from "styled-components";
-import { removeTodo, toggleCompleteStatus } from "@src/store/slices/todoSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import styled from "styled-components";
-
 import { ReactComponent as DeleteTodoIcon } from "@assets/ico_delete_todo.svg";
 import { ReactComponent as EditTodoIcon } from "@assets/ico_edit_todo.svg";
 import { ReactComponent as TodoDoneIcon } from "@assets/ico_todo_done.svg";
 import { ReactComponent as TodoProgressingIcon } from "@assets/ico_todo_progressing.svg";
+import { TodoItem as TodoItemType } from "@src/interfaces/Todo";
+// import styled from "styled-components";
+import { removeTodo, toggleCompleteStatus } from "@src/store/slices/todoSlice";
+import Modal from "react-modal";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;

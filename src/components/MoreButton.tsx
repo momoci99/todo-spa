@@ -1,6 +1,5 @@
-import styled from "styled-components";
-
 import { ReactComponent as MoreIcon } from "@assets/ico_more_horizontal.svg";
+import styled from "styled-components";
 
 const Wrapper = styled.button`
   background: none;

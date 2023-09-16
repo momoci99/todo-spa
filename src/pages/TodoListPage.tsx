@@ -13,7 +13,7 @@ import {
 } from "@src/store/slices/todoCategorySlice";
 import { fetchTodosByCategoryId } from "@src/store/slices/todoSlice";
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -40,6 +40,7 @@ const TodoListPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const today = dayjs(new Date()).format("YYYY. MM. DD");
+  const [addButtonBlurFlag, setAddButtonBlurFlag] = useState(false);
 
   const todoList = useSelector((state: RootState) => {
     return state.todo.todoList;
@@ -64,6 +65,26 @@ const TodoListPage = () => {
       dispatch(fetchTodosByCategoryId(""));
     }
   }, [todoCategories]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setAddButtonBlurFlag(true);
+    });
+
+    window.addEventListener("scrollend", () => {
+      setAddButtonBlurFlag(false);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", () => {
+        setAddButtonBlurFlag(true);
+      });
+
+      window.removeEventListener("scrollend", () => {
+        setAddButtonBlurFlag(false);
+      });
+    };
+  }, []);
 
   return (
     <Page title={today}>
@@ -94,6 +115,7 @@ const TodoListPage = () => {
         </section>
 
         <AddTodoButton
+          blurFlag={addButtonBlurFlag}
           onClick={() => {
             navigate("/addTodo");
           }}

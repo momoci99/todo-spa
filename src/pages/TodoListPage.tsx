@@ -1,4 +1,6 @@
+import { ReactComponent as AddTodoIcon } from "@src/assets/ico_add_todo.svg";
 import CategoryButton from "@src/components/Common/CategoryButton";
+import AddTodoButton from "@src/components/TodoListPage/AddTodoButton";
 import TodoItem from "@src/components/TodoListPage/TodoItem";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { RootState } from "@src/store";
@@ -87,14 +89,13 @@ const TodoListPage = () => {
         })}
       </section>
 
-      <button
-        type="button"
+      <AddTodoButton
         onClick={() => {
           navigate("/addTodo");
         }}
       >
-        +
-      </button>
+        <AddTodoIcon />
+      </AddTodoButton>
 
       <ul className="todo-list-container">
         {todoList.map((todo) => (

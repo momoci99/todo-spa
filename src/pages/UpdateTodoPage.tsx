@@ -1,3 +1,4 @@
+import Page from "@src/components/Common/Page";
 import TodoInput from "@src/components/TodoInput";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { RootState } from "@src/store";
@@ -8,6 +9,7 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
@@ -111,19 +113,21 @@ const UpdateTodoPage = () => {
   };
 
   return (
-    <Wrapper>
-      <TodoInput
-        title={title}
-        titleOnChangeHandler={titleOnChangeHandler}
-        description={description}
-        descriptionOnChangeHandler={descriptionOnChangeHandler}
-        onSaveButtonHandler={onSaveButtonHandler}
-        originCategoryIds={originCategoryIds}
-        userInputCategory={userInputCategory}
-        userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
-        userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
-      ></TodoInput>
-    </Wrapper>
+    <Page title={title}>
+      <Wrapper>
+        <TodoInput
+          title={title}
+          titleOnChangeHandler={titleOnChangeHandler}
+          description={description}
+          descriptionOnChangeHandler={descriptionOnChangeHandler}
+          onSaveButtonHandler={onSaveButtonHandler}
+          originCategoryIds={originCategoryIds}
+          userInputCategory={userInputCategory}
+          userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
+          userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
+        ></TodoInput>
+      </Wrapper>
+    </Page>
   );
 };
 

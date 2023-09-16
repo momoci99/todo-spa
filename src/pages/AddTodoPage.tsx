@@ -1,3 +1,4 @@
+import Page from "@src/components/Common/Page";
 import TodoInput from "@src/components/TodoInput";
 import { CATEGORY_COLOR_PALETTE } from "@src/constatns/CategoryColorPalette";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
@@ -100,19 +101,21 @@ const AddTodoPage = () => {
   };
 
   return (
-    <Wrapper>
-      <TodoInput
-        title={title}
-        titleOnChangeHandler={titleOnChangeHandler}
-        description={description}
-        descriptionOnChangeHandler={descriptionOnChangeHandler}
-        onSaveButtonHandler={onSaveButtonHandler}
-        originCategoryIds={originCategoryIds}
-        userInputCategory={userInputCategory}
-        userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
-        userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
-      ></TodoInput>
-    </Wrapper>
+    <Page title={title ? title : "New Todo"}>
+      <Wrapper>
+        <TodoInput
+          title={title}
+          titleOnChangeHandler={titleOnChangeHandler}
+          description={description}
+          descriptionOnChangeHandler={descriptionOnChangeHandler}
+          onSaveButtonHandler={onSaveButtonHandler}
+          originCategoryIds={originCategoryIds}
+          userInputCategory={userInputCategory}
+          userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
+          userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
+        ></TodoInput>
+      </Wrapper>
+    </Page>
   );
 };
 

@@ -1,5 +1,6 @@
 import { ReactComponent as AddTodoIcon } from "@src/assets/ico_add_todo.svg";
 import CategoryButton from "@src/components/Common/CategoryButton";
+import Page from "@src/components/Common/Page";
 import AddTodoButton from "@src/components/TodoListPage/AddTodoButton";
 import TodoItem from "@src/components/TodoListPage/TodoItem";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
@@ -11,12 +12,13 @@ import {
   removeCategoryById,
 } from "@src/store/slices/todoCategorySlice";
 import { fetchTodosByCategoryId } from "@src/store/slices/todoSlice";
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   .todo-list-container {
     display: flex;
     flex-direction: column;
@@ -37,6 +39,7 @@ const Wrapper = styled.div`
 const TodoListPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const today = dayjs(new Date()).format("YYYY. MM. DD");
 
   const todoList = useSelector((state: RootState) => {
     return state.todo.todoList;
@@ -63,46 +66,48 @@ const TodoListPage = () => {
   }, [todoCategories]);
 
   return (
-    <Wrapper>
-      <section className="category-container">
-        {todoCategories.map((category) => {
-          return (
-            <CategoryButton
-              showDeleteButton
-              name={category.name}
-              $backgroundColor={category.backgroundColor}
-              key={category.id}
-              $isActivated={category.isActivated ? true : false}
-              onClickHandler={() => {
-                if (category.isActivated) {
-                  dispatch(deactivateTodoCategory());
-                } else {
-                  dispatch(activateTodoCategory(category));
-                }
-              }}
-              onDeleteButtonClickHandler={() => {
-                dispatch(removeCategoryById(category.id));
-                dispatch(fetchTodoCategories());
-              }}
-            ></CategoryButton>
-          );
-        })}
-      </section>
+    <Page title={today}>
+      <Wrapper>
+        <section className="category-container">
+          {todoCategories.map((category) => {
+            return (
+              <CategoryButton
+                showDeleteButton
+                name={category.name}
+                $backgroundColor={category.backgroundColor}
+                key={category.id}
+                $isActivated={category.isActivated ? true : false}
+                onClickHandler={() => {
+                  if (category.isActivated) {
+                    dispatch(deactivateTodoCategory());
+                  } else {
+                    dispatch(activateTodoCategory(category));
+                  }
+                }}
+                onDeleteButtonClickHandler={() => {
+                  dispatch(removeCategoryById(category.id));
+                  dispatch(fetchTodoCategories());
+                }}
+              ></CategoryButton>
+            );
+          })}
+        </section>
 
-      <AddTodoButton
-        onClick={() => {
-          navigate("/addTodo");
-        }}
-      >
-        <AddTodoIcon />
-      </AddTodoButton>
+        <AddTodoButton
+          onClick={() => {
+            navigate("/addTodo");
+          }}
+        >
+          <AddTodoIcon />
+        </AddTodoButton>
 
-      <ul className="todo-list-container">
-        {todoList.map((todo) => (
-          <TodoItem key={todo.id} todo={todo}></TodoItem>
-        ))}
-      </ul>
-    </Wrapper>
+        <ul className="todo-list-container">
+          {todoList.map((todo) => (
+            <TodoItem key={todo.id} todo={todo}></TodoItem>
+          ))}
+        </ul>
+      </Wrapper>
+    </Page>
   );
 };
 

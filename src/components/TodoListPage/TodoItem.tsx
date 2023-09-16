@@ -72,7 +72,7 @@ const Wrapper = styled.li`
     justify-content: space-between;
     align-items: center;
 
-    padding: 16px;
+    padding: 12px 16px;
 
     font-family: Noto Sans KR;
     font-size: ${(props) => {

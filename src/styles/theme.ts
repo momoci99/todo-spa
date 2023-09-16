@@ -66,6 +66,7 @@ const fontSizes = {
 
 const fontWeights = {
   bold: 700,
+  lightBold: 600,
   medium: 500,
   normal: 400,
   light: 300,

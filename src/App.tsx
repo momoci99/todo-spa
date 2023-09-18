@@ -31,8 +31,11 @@ const router = createBrowserRouter([
 ]);
 
 const Wrapper = styled.main`
+  height: 100%;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 `;
 
 function App() {

@@ -1,5 +1,51 @@
+import Button from "@src/components/Common/Button";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+
+    padding-bottom: 24px;
+
+    .label {
+      font-family: Noto Sans KR;
+      font-weight: ${(props) => props.theme.fontWeights.medium};
+      font-size: ${(props) => props.theme.fontSizes.normal};
+      text-align: left;
+      color: ${(props) => props.theme.colors.neutral.primary};
+
+      padding-bottom: 12px;
+    }
+
+    .input {
+      padding: 20px;
+      border-radius: 6px;
+
+      border: ${(props) => {
+        return `1px solid ${props.theme.colors.neutral.line}`;
+      }};
+
+      color: ${(props) => props.theme.colors.neutral.primary};
+      font-family: Noto Sans KR;
+
+      resize: vertical;
+    }
+  }
+
+  .save-button {
+    position: absolute;
+    bottom: 50px;
+  }
+`;
 
 interface TodoInputProps {
   title: string;
@@ -37,30 +83,31 @@ const TodoInput = (props: TodoInputProps) => {
   });
 
   return (
-    <form
-      action=""
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <button type="button" onClick={onSaveButtonHandler}>
-        저장하기
-      </button>
+    <Wrapper>
+      <div className="input-container">
+        <label className="label" htmlFor="title">
+          제목
+        </label>
+        <input
+          className="input"
+          value={title}
+          id="title"
+          name="title"
+          onChange={titleOnChangeHandler}
+        ></input>
+      </div>
 
-      <label htmlFor="title">제목</label>
-      <input
-        value={title}
-        id="title"
-        name="title"
-        onChange={titleOnChangeHandler}
-      ></input>
-
-      <label htmlFor="description">설명</label>
-      <textarea
-        value={description}
-        id="description"
-        onChange={descriptionOnChangeHandler}
-      ></textarea>
+      <div className="input-container">
+        <label className="label" htmlFor="description">
+          설명
+        </label>
+        <textarea
+          className="input"
+          value={description}
+          id="description"
+          onChange={descriptionOnChangeHandler}
+        ></textarea>
+      </div>
 
       <ul>
         {originCategoryIds.map((id) => {
@@ -72,17 +119,30 @@ const TodoInput = (props: TodoInputProps) => {
         })}
       </ul>
 
-      <label htmlFor="category">카테고리</label>
-      <input
-        value={userInputCategory}
-        onChange={userInputCategoryOnChangeHandler}
-        onKeyPress={(event) => {
-          if (event.key === "Enter") {
-            userInputCategoryEnterKeyHandler();
-          }
-        }}
-      ></input>
-    </form>
+      <div className="input-container">
+        <label className="label" htmlFor="category">
+          카테고리
+        </label>
+        <input
+          className="input"
+          value={userInputCategory}
+          onChange={userInputCategoryOnChangeHandler}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              userInputCategoryEnterKeyHandler();
+            }
+          }}
+        ></input>
+      </div>
+
+      <Button
+        customStyle="save-button"
+        onClick={onSaveButtonHandler}
+        size="large"
+      >
+        저장하기
+      </Button>
+    </Wrapper>
   );
 };
 

@@ -11,16 +11,6 @@ import { v4 as uuidv4 } from "uuid";
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
-
-  > form {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
 `;
 
 const AddTodoPage = () => {
@@ -45,7 +35,7 @@ const AddTodoPage = () => {
         description: description,
         creationDate: new Date().toISOString(),
         isCompleted: false,
-        categoryIds: originCategoryIds.map((id) => id),
+        categoryIds: originCategoryIds ? originCategoryIds.map((id) => id) : [],
       }),
     })
       .then(() => {

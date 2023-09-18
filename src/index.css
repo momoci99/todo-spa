@@ -11,9 +11,9 @@ body {
 #root {
   height: 100%;
   margin: 0 auto;
-  width: 50%; /* 가로 크기 조절 */
+  width: 40%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     width: 80%;
   }
 }

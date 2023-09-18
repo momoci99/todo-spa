@@ -15,13 +15,13 @@ const Wrapper = styled.div<{
     if (props.size === "default") {
       return `
         box-shadow: 0px 4px 40px 0px rgba(15, 22, 58, 0.08);
-        border-radius: 4px;
+        border-radius: 8px;
       `;
     } else if (props.size === "small") {
       return `
         
         box-shadow: 0px 4px 4px 0px rgba(11, 26, 40, 0.04);
-        border-radius: 4px;
+        border-radius: 8px;
       `;
     } else if (props.size === "other") {
       return `

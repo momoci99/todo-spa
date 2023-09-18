@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-const Wrapper = styled.button<{ blurFlag: boolean }>`
+const Wrapper = styled.button<{ $blurFlag: boolean }>`
   position: fixed;
 
   bottom: 20px;
   right: 20px;
 
   ${(props) => {
-    if (props.blurFlag) {
+    if (props.$blurFlag) {
       return `background-color: ${props.theme.colors.primary.default}55;
         backdrop-filter: blur(5px);
         `;
@@ -42,13 +42,13 @@ const Wrapper = styled.button<{ blurFlag: boolean }>`
 interface AddTodoButtonProps {
   onClick: () => void;
   children: React.ReactNode;
-  blurFlag: boolean;
+  $blurFlag: boolean;
 }
 
 const AddTodoButton = (props: AddTodoButtonProps) => {
-  const { children, onClick, blurFlag } = props;
+  const { children, onClick, $blurFlag } = props;
   return (
-    <Wrapper onClick={onClick} blurFlag={blurFlag}>
+    <Wrapper onClick={onClick} $blurFlag={$blurFlag}>
       {children}
     </Wrapper>
   );

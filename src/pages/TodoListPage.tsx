@@ -115,7 +115,7 @@ const TodoListPage = () => {
         </section>
 
         <AddTodoButton
-          blurFlag={addButtonBlurFlag}
+          $blurFlag={addButtonBlurFlag}
           onClick={() => {
             navigate("/addTodo");
           }}

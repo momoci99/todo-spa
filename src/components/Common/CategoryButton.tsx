@@ -56,7 +56,7 @@ interface CategoryButtonPros {
   $isActivated?: boolean;
   showDeleteButton?: boolean;
   onClickHandler?: () => void;
-  onDeleteButtonClickHandler?: () => void;
+  onDeleteButtonClickHandler?: (event: unknown) => void;
 }
 
 const CategoryButton = (props: CategoryButtonPros) => {

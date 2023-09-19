@@ -1,8 +1,5 @@
 import Page from "@src/components/Common/Page";
 import TodoInput from "@src/components/TodoInput";
-import { CATEGORY_COLOR_PALETTE } from "@src/constatns/CategoryColorPalette";
-import { useAppDispatch } from "@src/hooks/useCustomDispatch";
-import { fetchTodoCategories } from "@src/store/slices/todoCategorySlice";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -14,13 +11,14 @@ const Wrapper = styled.div`
 `;
 
 const AddTodoPage = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const [originCategoryIds, setOriginCategoryIds] = useState<Array<string>>([]);
+  const [todoItemCategoryIds, setTodoItemCategoryIds] = useState<Array<string>>(
+    []
+  );
   const [userInputCategory, setUserInputCategory] = useState("");
 
   const onSaveButtonHandler = () => {
@@ -35,7 +33,9 @@ const AddTodoPage = () => {
         description: description,
         creationDate: new Date().toISOString(),
         isCompleted: false,
-        categoryIds: originCategoryIds ? originCategoryIds.map((id) => id) : [],
+        categoryIds: todoItemCategoryIds
+          ? todoItemCategoryIds.map((id) => id)
+          : [],
       }),
     })
       .then(() => {
@@ -63,33 +63,6 @@ const AddTodoPage = () => {
     setUserInputCategory(event.target.value);
   };
 
-  const userInputCategoryEnterKeyHandler = () => {
-    const randomColorIndex = Math.floor(
-      Math.random() * CATEGORY_COLOR_PALETTE.length
-    );
-
-    const { backgroundColor } = CATEGORY_COLOR_PALETTE[randomColorIndex];
-
-    const newCategory = {
-      id: uuidv4(),
-      name: userInputCategory,
-      backgroundColor: backgroundColor,
-    };
-
-    fetch("http://localhost:3000/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCategory),
-    }).then(() => {
-      dispatch(fetchTodoCategories());
-    });
-
-    setOriginCategoryIds([...originCategoryIds, newCategory.id]);
-    setUserInputCategory("");
-  };
-
   return (
     <Page title={title ? title : "New Todo"}>
       <Wrapper>
@@ -99,10 +72,10 @@ const AddTodoPage = () => {
           description={description}
           descriptionOnChangeHandler={descriptionOnChangeHandler}
           onSaveButtonHandler={onSaveButtonHandler}
-          originCategoryIds={originCategoryIds}
+          todoItemCategoryIds={todoItemCategoryIds}
+          setTodoItemCategoryIds={setTodoItemCategoryIds}
           userInputCategory={userInputCategory}
           userInputCategoryOnChangeHandler={userInputCategoryOnChangeHandler}
-          userInputCategoryEnterKeyHandler={userInputCategoryEnterKeyHandler}
         ></TodoInput>
       </Wrapper>
     </Page>

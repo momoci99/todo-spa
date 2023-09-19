@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 `;

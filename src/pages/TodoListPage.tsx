@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   .todo-list-container {
     display: flex;
     flex-direction: column;

@@ -74,7 +74,7 @@ const Wrapper = styled.div`
 
 interface TodoInputProps {
   title: string;
-  titleOnChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  titleOnChangeHandler: InputChangeHandler;
   description: string;
   todoItemCategoryIds: Array<string>;
   userInputCategory: string;

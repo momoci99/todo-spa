@@ -46,7 +46,7 @@ const AddTodoPage = () => {
       });
   };
 
-  const titleOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const titleOnChangeHandler: InputChangeHandler = (event) => {
     if (!event) return;
     setTitle(event.target.value);
   };

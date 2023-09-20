@@ -29,7 +29,7 @@ const AddTodoPage = () => {
       },
       body: JSON.stringify({
         id: uuidv4(),
-        title: title,
+        title: title ? title : "제목 없음",
         description: description,
         creationDate: new Date().toISOString(),
         isCompleted: false,

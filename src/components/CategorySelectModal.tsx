@@ -1,6 +1,6 @@
 import Button from "@src/components/Common/Button";
 import CategoryButton from "@src/components/Common/CategoryButton";
-import { CATEGORY_COLOR_PALETTE } from "@src/constatns/CategoryColorPalette";
+import { CATEGORY_COLOR_PALETTE } from "@src/constants/CategoryColorPalette";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { RootState } from "@src/store";
 import { fetchTodoCategories } from "@src/store/slices/todoCategorySlice";

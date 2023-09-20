@@ -134,16 +134,6 @@ const TodoInput = (props: TodoInputProps) => {
         ></textarea>
       </div>
 
-      <ul>
-        {todoItemCategoryIds.map((id) => {
-          return (
-            <li key={id}>
-              {todoCategories.find((category) => category.id === id)?.name}
-            </li>
-          );
-        })}
-      </ul>
-
       <div className="input-container">
         <label className="label" htmlFor="category">
           카테고리

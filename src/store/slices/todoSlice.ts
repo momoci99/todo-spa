@@ -1,5 +1,6 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_LOADING_STATE, API_URL } from "@src/constants/Api";
 import { TodoItem } from "@src/interfaces/Todo";
 
 const fetchTodosByCategoryId = createAsyncThunk(
@@ -8,11 +9,9 @@ const fetchTodosByCategoryId = createAsyncThunk(
     let res = undefined;
 
     if (categoryId) {
-      res = await fetch(
-        "http://localhost:3000/todos?categoryIds_like=" + categoryId
-      );
+      res = await fetch(API_URL + "/todos?categoryIds_like=" + categoryId);
     } else {
-      res = await fetch("http://localhost:3000/todos");
+      res = await fetch(API_URL + "/todos");
     }
 
     const result: TodoItem[] = await res.json();
@@ -22,10 +21,14 @@ const fetchTodosByCategoryId = createAsyncThunk(
 
 interface TodoListState {
   todoList: TodoItem[];
+  loading: API_LOADING_STATE;
+  error: SerializedError | null;
 }
 
 const initialState: TodoListState = {
   todoList: [],
+  loading: "idle",
+  error: null,
 };
 
 const todoSlice = createSlice({
@@ -67,8 +70,18 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchTodosByCategoryId.pending, (state) => {
+      state.loading = "loading";
+    });
+
     builder.addCase(fetchTodosByCategoryId.fulfilled, (state, action) => {
       state.todoList = action.payload;
+      state.loading = "succeeded";
+    });
+
+    builder.addCase(fetchTodosByCategoryId.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.error;
     });
   },
 });

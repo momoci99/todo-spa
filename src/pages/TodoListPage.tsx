@@ -3,6 +3,7 @@ import CategoryButton from "@src/components/Common/CategoryButton";
 import Page from "@src/components/Common/Page";
 import AddTodoButton from "@src/components/TodoListPage/AddTodoButton";
 import TodoItem from "@src/components/TodoListPage/TodoItem";
+import TodoItemLoader from "@src/components/TodoListPage/TodoItemLoader";
 import { useAppDispatch } from "@src/hooks/useCustomDispatch";
 import { RootState } from "@src/store";
 import {
@@ -19,6 +20,21 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  .loading-container {
+    font-family: Noto Sans KR;
+    font-size: ${(props) => props.theme.fontSizes.medium};
+    font-weight: ${(props) => props.theme.fontWeights.medium};
+    color: ${(props) => props.theme.colors.neutral.primary};
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   .todo-list-container {
     display: flex;
     flex-direction: column;
@@ -44,6 +60,10 @@ const TodoListPage = () => {
 
   const todoList = useSelector((state: RootState) => {
     return state.todo.todoList;
+  });
+
+  const loading = useSelector((state: RootState) => {
+    return state.todo.loading;
   });
 
   const todoCategories = useSelector((state: RootState) => {
@@ -123,11 +143,23 @@ const TodoListPage = () => {
           <AddTodoIcon />
         </AddTodoButton>
 
-        <ul className="todo-list-container">
-          {todoList.map((todo) => (
-            <TodoItem key={todo.id} todo={todo}></TodoItem>
-          ))}
-        </ul>
+        <section className="loading-container">
+          {loading === "loading" ? <TodoItemLoader /> : null}
+          {loading === "failed" ? (
+            <span>목록을 불러오는데 문제가 발생하였습니다.</span>
+          ) : null}
+          {loading === "succeeded" && todoList.length === 0 ? (
+            <span>목록이 없습니다 새로운 할일을 만들어보세요.</span>
+          ) : null}
+        </section>
+
+        {loading === "succeeded" && todoList.length !== 0 && (
+          <ul className="todo-list-container">
+            {todoList.map((todo) => (
+              <TodoItem key={todo.id} todo={todo}></TodoItem>
+            ))}
+          </ul>
+        )}
       </Wrapper>
     </Page>
   );

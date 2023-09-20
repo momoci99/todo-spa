@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  height: 100%;
+
   .page-title {
     font-family: Noto Sans KR;
     text-align: center;

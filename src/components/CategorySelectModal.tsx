@@ -13,7 +13,7 @@ const Container = styled.div`
   position: relative;
   height: 100%;
   margin: 0 auto;
-  width: 40%;
+  width: 80%;
 
   .modal-title {
     font-family: Noto Sans KR;

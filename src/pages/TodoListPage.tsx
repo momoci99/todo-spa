@@ -21,7 +21,6 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
 
   .loading-container {
     font-family: Noto Sans KR;
@@ -32,7 +31,16 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    white-space: pre-wrap;
+
     height: 100%;
+
+    > span {
+      position: absolute;
+      top: 50%;
+      text-align: center;
+    }
   }
 
   .todo-list-container {
@@ -143,15 +151,19 @@ const TodoListPage = () => {
           <AddTodoIcon />
         </AddTodoButton>
 
-        <section className="loading-container">
-          {loading === "loading" ? <TodoItemLoader /> : null}
-          {loading === "failed" ? (
-            <span>목록을 불러오는데 문제가 발생하였습니다.</span>
-          ) : null}
-          {loading === "succeeded" && todoList.length === 0 ? (
-            <span>목록이 없습니다 새로운 할일을 만들어보세요.</span>
-          ) : null}
-        </section>
+        {todoList.length === 0 && (
+          <section className="loading-container">
+            {loading === "loading" ? <TodoItemLoader /> : null}
+            {loading === "failed" ? (
+              <span>목록을 불러오는데 문제가 발생하였어요.</span>
+            ) : null}
+            {loading === "succeeded" && todoList.length === 0 ? (
+              <span>
+                모든 일을 끝냈어요.<br></br>새로운 할일을 만들어보세요!
+              </span>
+            ) : null}
+          </section>
+        )}
 
         {loading === "succeeded" && todoList.length !== 0 && (
           <ul className="todo-list-container">

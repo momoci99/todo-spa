@@ -89,26 +89,6 @@ const UpdateTodoPage = () => {
     setUserInputCategory(event.target.value);
   };
 
-  // const userInputCategoryEnterKeyHandler = () => {
-  //   const newCategory = {
-  //     id: uuidv4(),
-  //     name: userInputCategory,
-  //   };
-
-  //   fetch("http://localhost:3000/categories", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(newCategory),
-  //   }).then(() => {
-  //     dispatch(fetchTodoCategories());
-  //   });
-
-  //   setOriginCategoryIds([...originCategoryIds, newCategory.id]);
-  //   setUserInputCategory("");
-  // };
-
   return (
     <Page title={title}>
       <Wrapper>

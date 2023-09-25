@@ -16,8 +16,8 @@
 
 ```bash
 yarn # or npm install
-yarn dev # 개발 서버 실행
 yarn json-server # json-server 실행
+yarn dev # 개발 서버 실행
 ```
 
 ## 기능

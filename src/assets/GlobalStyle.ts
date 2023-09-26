@@ -1,3 +1,4 @@
+import GlobalFontStyle from "@src/fonts/fonts";
 import { createGlobalStyle, css } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`${css`
@@ -125,6 +126,8 @@ const GlobalStyle = createGlobalStyle`${css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  ${GlobalFontStyle}
 `}`;
 
 export default GlobalStyle;

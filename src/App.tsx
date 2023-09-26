@@ -1,7 +1,6 @@
 import "@src/App.css";
 
 import GlobalStyle from "@assets/GlobalStyle";
-import GlobalFontStyle from "@src/fonts/fonts";
 import router from "@src/router";
 import store from "@src/store/index";
 import theme from "@src/styles/theme";
@@ -27,7 +26,7 @@ function App() {
       <Wrapper className="app">
         <Provider store={store}>
           <GlobalStyle />
-          <GlobalFontStyle />
+
           <RouterProvider router={router} />
         </Provider>
       </Wrapper>

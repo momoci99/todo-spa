@@ -49,7 +49,7 @@ const Wrapper = styled.button<{
 `;
 
 interface ButtonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick: () => void;
   size: "small" | "medium" | "large";
   disabled?: boolean;

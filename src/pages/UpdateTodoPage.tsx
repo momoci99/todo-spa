@@ -65,7 +65,14 @@ const UpdateTodoPage = () => {
   };
 
   useEffect(() => {
-    if (!todo) return;
+    if (!id) navigate("/");
+  }, [id]);
+
+  useEffect(() => {
+    if (!todo) {
+      navigate("/error");
+      return;
+    }
 
     setTitle(todo.title);
     setDescription(todo.description);

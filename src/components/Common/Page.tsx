@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 interface PageProps {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 
@@ -24,7 +24,7 @@ const Page = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <h1 className="page-title">{title}</h1>
+      {title && <h1 className="page-title">{title}</h1>}
       {props.children}
     </Wrapper>
   );

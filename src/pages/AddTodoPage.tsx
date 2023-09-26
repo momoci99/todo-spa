@@ -1,6 +1,9 @@
 import Page from "@src/components/Common/Page";
 import TodoInput from "@src/components/TodoInput";
+import { useAppDispatch } from "@src/hooks/useCustomDispatch";
+import { fetchTodoCategories } from "@src/store/slices/todoCategorySlice";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -11,6 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const AddTodoPage = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -20,6 +24,10 @@ const AddTodoPage = () => {
     []
   );
   const [userInputCategory, setUserInputCategory] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchTodoCategories());
+  }, []);
 
   const onSaveButtonHandler = () => {
     fetch("http://localhost:3000/todos", {

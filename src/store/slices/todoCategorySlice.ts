@@ -1,11 +1,12 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_LOADING_STATE, API_URL } from "@src/constants/Api";
 import { DetailedTodoCategory, TodoCategory } from "@src/interfaces/Todo";
 
 const fetchTodoCategories = createAsyncThunk<TodoCategory[]>(
   "todoCategories/fetchTodoCategories",
   async () => {
-    const res = await fetch("http://localhost:3000/categories");
+    const res = await fetch(API_URL + "/categories");
     const result: TodoCategory[] = await res.json();
     return result;
   }
@@ -14,7 +15,7 @@ const fetchTodoCategories = createAsyncThunk<TodoCategory[]>(
 const removeCategoryById = createAsyncThunk<void, string>(
   "todoCategories/removeCategory",
   async (categoryId: string) => {
-    await fetch("http://localhost:3000/categories/" + categoryId, {
+    await fetch(API_URL + "/categories/" + categoryId, {
       method: "DELETE",
     });
   }
@@ -22,10 +23,12 @@ const removeCategoryById = createAsyncThunk<void, string>(
 
 interface TodoCategoryState {
   todoCategories: DetailedTodoCategory[];
+  loading: API_LOADING_STATE;
 }
 
 const initialState: TodoCategoryState = {
   todoCategories: [],
+  loading: "idle",
 };
 
 const todoCategories = createSlice({
@@ -52,8 +55,15 @@ const todoCategories = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchTodoCategories.pending, (state) => {
+      state.loading = "loading";
+    });
+    builder.addCase(fetchTodoCategories.rejected, (state) => {
+      state.loading = "failed";
+    });
     builder.addCase(fetchTodoCategories.fulfilled, (state, action) => {
       state.todoCategories = action.payload;
+      state.loading = "succeeded";
     });
   },
 });

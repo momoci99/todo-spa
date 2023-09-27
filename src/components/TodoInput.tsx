@@ -1,6 +1,8 @@
 import CategorySelect from "@src/components/CategorySelectModal";
 import Button from "@src/components/Common/Button";
 import CategoryButton from "@src/components/Common/CategoryButton";
+import Input from "@src/components/Common/Input";
+import Textarea from "@src/components/Common/Textarea";
 import { RootState } from "@src/store";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -27,20 +29,6 @@ const Wrapper = styled.div`
       color: ${(props) => props.theme.colors.neutral.primary};
 
       padding-bottom: 12px;
-    }
-
-    .input {
-      padding: 20px;
-      border-radius: 6px;
-
-      border: ${(props) => {
-        return `1px solid ${props.theme.colors.neutral.line}`;
-      }};
-
-      color: ${(props) => props.theme.colors.neutral.primary};
-      font-family: Noto Sans KR;
-
-      resize: vertical;
     }
   }
 
@@ -109,30 +97,13 @@ const TodoInput = (props: TodoInputProps) => {
 
   return (
     <Wrapper>
-      <div className="input-container">
-        <label className="label" htmlFor="title">
-          제목
-        </label>
-        <input
-          className="input"
-          value={title}
-          id="title"
-          name="title"
-          onChange={titleOnChangeHandler}
-        ></input>
-      </div>
+      <Input label="제목" value={title} onChange={titleOnChangeHandler}></Input>
 
-      <div className="input-container">
-        <label className="label" htmlFor="description">
-          설명
-        </label>
-        <textarea
-          className="input"
-          value={description}
-          id="description"
-          onChange={descriptionOnChangeHandler}
-        ></textarea>
-      </div>
+      <Textarea
+        label="설명"
+        value={description}
+        onChange={descriptionOnChangeHandler}
+      ></Textarea>
 
       <div className="input-container">
         <label className="label" htmlFor="category">
